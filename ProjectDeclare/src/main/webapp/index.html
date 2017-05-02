@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script src="common/jquery/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="common/jquery/jquery-ui.css">
+    <script src="common/jquery/jquery-ui.js"></script>
+    <script src="common/mytools/myTools.js"></script>
+    <link rel="stylesheet" href="common/bootstrap/css/bootstrap.css">
+    <script src="common/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="common/jstree/themes/default/style.min.css">
+    <script src="common/jstree/jstree.js"></script>
+    <script src="system/divTree/divTree.js"></script>
+    <link rel="stylesheet" href="common/global.css">
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">绩效信息管理系统</a>
+        </div>
+        <div class="nav navbar-nav navbar-right">
+            <div id="user_info">
+                <a id="register" href="system/register/register.html">注册</a>
+                <a id="login" href="javascript:showLoginDlg()">登录</a>
+            </div>
+        </div>
+    </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="my-menu thumbnail col-md-2" url="system/group/groupManage.html">
+        <img src="common/img/group.png" alt="">
+        <h4 class="text-center bold">分组管理</h4>
+    </div>
+    <div class="my-menu thumbnail col-md-2" url="business/target/targetPanel.html">
+        <img src="common/img/target.png" alt="">
+        <h4 class="text-center bold">目标申报</h4>
+    </div>
+</div>
+
+</body>
+<style>
+    /*body {*/
+    /*background-color: rgba(199, 237, 204, 0.82);*/
+    /*}*/
+
+    .navbar {
+        /*background-image: url("common/img/header.png");*/
+    }
+
+</style>
+<script>
+    $(function () {
+        var user_name = $.fn.getCookie("user_name");
+        var password = $.fn.getCookie("password");
+        login(user_name,password);
+    });
+
+    function showLoginDlg() {
+        var dialog = $("<div id='login_dialog'></div>").appendTo("body").load("system/login/login_dialog.html");
+        dialog.dialog({
+            width: 385,
+            height: 250,
+            title: "用户登录",
+            buttons: {
+                "取消": function () {
+
+                },
+                "登录": function () {
+                    var form = $("#login_dialog").find("form");
+                    var user_name = form.find("[name=user_name]").val();
+                    var password = form.find("[name=password]").val();
+                    login(user_name,password,function (data) {
+                        dialog.dialog("close");
+                    }, function () {
+                        dialog.find("#logInfo").html("<p>用户名或密码错误！</p>");
+                    });
+                }
+            }
+        });
+    }
+
+    function login(user_name,password,success, failed) {
+        $.fn.loginIn(user_name, password, function (data) {
+            if (data == null || typeof(data) == "undefined" || data == "") {
+                if (failed != null && typeof(failed) != "undefined") {
+                    failed.call(this);
+                }
+            } else {
+                $("#user_info").html("<h4>欢迎您" + data.userName + "</h4><a href='javascript:logout()'>退出</a>");
+                if (success != null && typeof(success) != "undefined") {
+                    success.call(this, data);
+                }
+            }
+        });
+    }
+
+    function logout() {
+        $.fn.loginOut(function () {
+            $.ajax({
+                url: $.fn.baseURL + "/usermanger/logout.do",
+                data: null,
+                type: "POST",
+                success: function () {
+                    $.fn.jumpToHome();
+                }
+            });
+        })
+    }
+
+    $(".my-menu").click(function () {
+        window.location = $(this).attr("url");
+    });
+
+</script>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iguohui.system.persistence.dao.SystemMapper">
+<resultMap id="BaseResultMap" type="com.iguohui.system.persistence.entity.SysGroup" >
+    <id column="GROUP_ID" property="groupId" jdbcType="VARCHAR" />
+    <result column="GROUP_CODE" property="groupCode" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="GROUP_REMARK" property="groupRemark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GROUP_ID, GROUP_CODE, PARENT_ID, GROUP_NAME, GROUP_REMARK, CREATE_TIME, UPDATE_TIME
+  </sql>
+	<select id="selectUserName"  parameterType="java.lang.String" resultType="java.util.HashMap">
+		select user_name from sys_user where user_name=#{user_name}
+	</select>
+	
+	<select id="getLstGroupByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select  <include refid="Base_Column_List"></include> from sys_group a
+		 where exists(select 1 from user_group b where a.group_id=b.group_id and b.user_id =#{userId})
+	</select>
+	
+	<select id="getAllListGroup" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"></include> from sys_group
+	</select>
+	
+<!-- 	<insert id="saveGroup" parameterType="java.util.ArrayList"  > -->
+<!-- 			insert into sys_group ( <include refid="Base_Column_List"></include> ) values -->
+<!-- 				<foreach collection="list"  item="item" index="index" separator="," > -->
+<!-- 						( #{item.groupId,jdbcType=VARCHAR},#{item.groupCode,jdbcType=VARCHAR},#{item.parentId,jdbcType=VARCHAR}, -->
+<!-- 						#{item.groupName,jdbcType=VARCHAR},#{item.groupRemark,jdbcType=VARCHAR}, -->
+<!-- 						#{item.createTime,jdbcType=VARCHAR},#{item.updateTime,jdbcType=VARCHAR}) -->
+<!-- 				</foreach> -->
+<!-- 	</insert> -->
+	<insert id="saveGroup" parameterType="java.util.ArrayList"  >
+			insert into sys_group select * from  (
+				<foreach collection="list"  item="item" index="index" separator=" union all " >
+						select  #{item.groupId,jdbcType=VARCHAR} a1,#{item.groupCode,jdbcType=VARCHAR} a2,#{item.parentId,jdbcType=VARCHAR} a3,
+						#{item.groupName,jdbcType=VARCHAR} a4,#{item.groupRemark,jdbcType=VARCHAR} a5,
+						#{item.createTime,jdbcType=VARCHAR} a6,#{item.updateTime,jdbcType=VARCHAR} a7 from dual
+				</foreach>
+				)
+	</insert>
+	
+	<delete id="deleteAllGroup">
+		delete from sys_group
+	</delete>
+</mapper>

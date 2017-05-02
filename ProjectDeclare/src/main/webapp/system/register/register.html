@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script src="../../common/jquery/jquery-1.11.0.min.js"></script>
+    <script src="../../common/mytools/myTools.js"></script>
+    <script src="../../common/jquery/jquery.form.js"></script>
+    <script src="../../common/jquery/jquery.validate.js"></script>
+    <link rel="stylesheet" href="../../common/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="register.css">
+    <script src="../../common/bootstrap/js/bootstrap.js"></script>
+    <script src="register.js"></script>
+</head>
+<body>
+<div id="register" class="container">
+    <h3 class="bold">新用户注册</h3>
+    <form id="form-register" role="form" class=" form-horizontal col-md-3">
+        <div class="form-group form-group-sm">
+            <label for="user_name" class="col-md-4 control-label">用户名*：</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="user_name" name="user_name" placeholder="请输入名称">
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="nick_name" class="col-md-4 control-label">昵称：</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="nick_name" name="nick_name" placeholder="请输入名称">
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="password" class="col-md-4 control-label">密&nbsp;码*：</label>
+            <div class="col-md-8">
+                <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="password1" class="col-md-4 control-label">密码确认*：</label>
+            <div class="col-md-8">
+                <input type="password" class="form-control" id="password1" name="password1" placeholder="请再次输入密码">
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="sex" class="col-md-4 control-label">性别*：</label>
+            <div class="col-md-8">
+                男<input type="radio" class="" id="sex" name="sex" value="男" checked>
+                女<input type="radio" class="" id="sex1" name="sex" value="女">
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="adress" class="col-md-4 control-label">地址：</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="address" name="address" placeholder="请输入地址">
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="phone" class="col-md-4 control-label">电话号码：</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="请输入电话号码">
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="remark" class="col-md-4 control-label">备注：</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="remark" name="remark" placeholder="">
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label for="password" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input type="submit" class="btn btn-default" value="提交">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

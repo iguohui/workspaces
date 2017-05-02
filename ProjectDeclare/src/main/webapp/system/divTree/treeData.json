@@ -1,0 +1,44 @@
+{
+  "core": {
+    "animation" : 0,
+    "check_callback" : true,
+    "data": [
+      {
+        "id": "China",
+        "text": "中国",
+        "data": {
+          "url": "../../learn/jstree/rightPanel/China.html"
+        },
+        "state": {
+          "opened": "true"
+        },
+        "children": [
+          {
+            "id": "shanghai",
+            "text": "上海",
+            "children": [
+              "静安区",
+              "虹口区"
+            ]
+          },
+          {
+            "id":"beijing",
+            "text":"北京"
+          }
+        ]
+      }
+    ]
+  },
+  "plugins": [
+    "contextmenu",
+    "dnd",
+    "massload",
+    "search",
+    "state",
+    "types",
+    "unique",
+    "wholerow",
+    "changed",
+    "conditionalselect"
+  ]
+}
